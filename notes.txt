@@ -1,0 +1,26 @@
+KLASS GRID
+Grid-objekt ska innehålla:
+
+ - array av integers med siffrorna i varje ruta
+ - jobba med tester för metoderna
+
+Metoder:
+ - init(): sätter ut siffrorna slumpmässigt
+    - parametrar: -
+    - retur: -
+
+ - flyttaBricka(): flyttar en bricka
+    - parametrar: x och y på den bricka som ska flyttas
+    - retur: true or false om brickan kunde flyttas?
+
+ - getGrid(): returnerar arrayen
+    - parametrar: inga
+    - retur: arrayen
+
+ - kollaVinst(): kollar om spelet har vunnits, alla brickor ligger rätt
+    - parametrar: inga
+    - return: true eller false
+
+
+USER INTERFACE
+JPanel med GridLayout 4x4, varje ruta innehåller en...... JButton?
