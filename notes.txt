@@ -37,3 +37,6 @@ JPanel med GridLayout 4x4, varje ruta innehåller en...... JButton?
 Metod som läser arrayen från grid-klassen och ändrar texten på varje knapp
 Metod som skickar ett värde till grid-klassen när man trycker på en knapp
  - skicka siffran som ska flyttas eller skicka koordinater?
+
+
+ ASD
