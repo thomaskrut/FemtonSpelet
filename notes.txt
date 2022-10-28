@@ -5,22 +5,35 @@ Grid-objekt ska innehålla:
  - jobba med tester för metoderna
 
 Metoder:
- - init(): sätter ut siffrorna slumpmässigt
+ - init(): sätter ut siffrorna slumpmässigt, tom ruta = 0;
+
     - parametrar: -
+
     - retur: -
 
- - flyttaBricka(): flyttar en bricka
+ - flyttaBricka(): flyttar en bricka, dvs ändrar i arrayen
+
     - parametrar: x och y på den bricka som ska flyttas
+    - eller parameter: en int, den siffra som ska flyttas, kanske enklare då knappen man trycker på har den siffran?
+
     - retur: true or false om brickan kunde flyttas?
 
  - getGrid(): returnerar arrayen
+
     - parametrar: inga
+
     - retur: arrayen
 
  - kollaVinst(): kollar om spelet har vunnits, alla brickor ligger rätt
+
     - parametrar: inga
+
     - return: true eller false
 
 
 USER INTERFACE
 JPanel med GridLayout 4x4, varje ruta innehåller en...... JButton?
+
+Metod som läser arrayen från grid-klassen och ändrar texten på varje knapp
+Metod som skickar ett värde till grid-klassen när man trycker på en knapp
+ - skicka siffran som ska flyttas eller skicka koordinater?
