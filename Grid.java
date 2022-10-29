@@ -30,7 +30,6 @@ public class Grid extends JFrame {
     }
 
 
-
     public int[] generateOneDimensionalArray() {  //Skapar en array 0-15. Används för att skapa gameBoard och buttonArray.
         int[] generatedArray = new int[16];
         for (int i = 0; i < 16; i++) {
@@ -58,14 +57,20 @@ public class Grid extends JFrame {
             }
         }
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++)
-                buttonArray[i][j].setText(String.valueOf(oneDimensionalArray[(i * columns) + j]));
+            for (int j = 0; j < columns; j++) {
+                    buttonArray[i][j].setText(String.valueOf(oneDimensionalArray[(i * columns) + j]));
+
+            }
         }
+        buttonArray[0][0].setText(""); // 0 0 blir blank istället för 0.
         return buttonArray;
     }
 
 
 
 
-
 }
+
+
+
+
