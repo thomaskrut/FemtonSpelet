@@ -3,47 +3,69 @@ import java.awt.*;
 
 
 public class Grid extends JFrame {
-
-    private Integer[][] grid = new Integer[4][4]; //Vill inte ta bort din rad.
-
-
     JFrame frame = new JFrame();
-    JPanel panel = new JPanel();
-    JButton[][] button;
-    JLabel[][] buttonlabel;
+    JPanel mainPanel = new JPanel(); //Ändrar namn till mainPanel för att lättare ha koll på vad koden referar till.
+    JButton[][] buttonArray;
     final int rows = 4;  //Horizontal
     final int columns = 4;//Vertikal
-    int[][] gameBoard;
 
+    int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
 
     public Grid() {
-        gameBoard = new int[rows][columns];  //Skapar 'spelbrädan'.
+        int[][] gameBoard = generateBoardArray(oneDimensionalArray); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
         showGrid();
     }
 
 
     public void showGrid() {
 
-        panel.setLayout(new GridLayout(4, 4));
-        button = new JButton[rows][columns];
-        buttonlabel = new JLabel[rows][columns];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                button[i][j] = new JButton();
-                String labelString = i + "." + j; //labelString till knappens array-position
-                buttonlabel[i][j] = new JLabel();
-                buttonlabel[i][j].setText(labelString);
-                button[i][j].add(buttonlabel[i][j]);
-                panel.add(button[i][j]);
-            }
-        }
-        frame.add(panel);
+        mainPanel.setLayout(new GridLayout(4, 4));
+        buttonArray = generateButtonArray(oneDimensionalArray); //Skapar buttonarray och tilldelar textvärde 0-15.
+        frame.add(mainPanel);
         frame.setVisible(true);
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
     }
+
+
+
+    public int[] generateOneDimensionalArray() {  //Skapar en array 0-15. Används för att skapa gameBoard och buttonArray.
+        int[] generatedArray = new int[16];
+        for (int i = 0; i < 16; i++) {
+            generatedArray[i] = i;
+        }
+        return generatedArray;
+    }
+
+
+    public int[][] generateBoardArray(int[] oneDimensionalArray) {
+        int[][] gameBoardArray = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++)
+                gameBoardArray[i][j] = oneDimensionalArray[(i * columns) + j];
+        }
+        return gameBoardArray;
+    }
+
+    public JButton[][] generateButtonArray(int[] oneDimensionalArray) {
+        JButton[][] buttonArray = new JButton[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                buttonArray[i][j] = new JButton();
+                mainPanel.add(buttonArray[i][j]);
+            }
+        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++)
+                buttonArray[i][j].setText(String.valueOf(oneDimensionalArray[(i * columns) + j]));
+        }
+        return buttonArray;
+    }
+
+
+
 
 
 }
