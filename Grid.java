@@ -155,19 +155,13 @@ public class Grid implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton buttonPressed = (JButton) e.getSource();
 
-        String s = buttonPressed.getText();
-        if(s.isBlank()){
-            s="0";
-        }
-        int selectedTile = Integer.parseInt(s);
-
         if (updateButtonArray(buttonPressed)) {
             updateButtonsDisplay();
         }
 
 
-        System.out.println(s);
-        System.out.println(selectedTile);
+        System.out.println(buttonPressed.getText());
+
         //används i testsyfte då jag inte kan skapa en testmap. Skriver ut button text.
         //Kanske gå att använda mot int array "gameBoard" för att ha koll vart varje tile är lättare?
 
