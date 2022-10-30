@@ -82,14 +82,89 @@ public class Grid implements ActionListener {
         return buttonArray;
     }
 
+    public void updateButtonsDisplay() {
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
+                if (gameBoard[i][j] == 0) {
+                    buttonArray[i][j].setVisible(false);
+                }
+                else {
+                    buttonArray[i][j].setVisible(true);
+                }
+
+            }
+        }
+
+    }
+
+    public boolean updateButtonArray(JButton buttonPressed) {
+        int number = Integer.parseInt(buttonPressed.getText());
+        int x = 0;
+        int y = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+               if (gameBoard[i][j] == number) {
+                   x = i;
+                   y = j;
+               }
+            }
+        }
+
+        if (x > 0) {
+            if (gameBoard[x-1][y] == 0) {
+                gameBoard[x-1][y] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        if (x < columns - 1) {
+            if (gameBoard[x+1][y] == 0) {
+                gameBoard[x+1][y] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        if (y > 0) {
+            if (gameBoard[x][y-1] == 0) {
+                gameBoard[x][y-1] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        if (y < rows - 1) {
+            if (gameBoard[x][y+1] == 0) {
+                gameBoard[x][y+1] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        return false;
+
+
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String s = e.getActionCommand();
+        JButton buttonPressed = (JButton) e.getSource();
+
+        String s = buttonPressed.getText();
         if(s.isBlank()){
             s="0";
         }
-        int selectedTile =Integer.parseInt(s);
+        int selectedTile = Integer.parseInt(s);
+
+        if (updateButtonArray(buttonPressed)) {
+            updateButtonsDisplay();
+        }
+
 
         System.out.println(s);
         System.out.println(selectedTile);
