@@ -1,0 +1,8 @@
+Idéer för vad som behövs:
+
+[ ] metod som kollar om man vunnit
+    - något sätt att initiera spelet så att det snabbt kan vinnas, för att kunna testa och redovisa
+[ ] knappar för att avsluta och skapa nytt spel
+[ ] räknare som räknar antal förflyttningar
+[ ] större text på knapparna
+[ ] annan färg/ram på knapparna?
