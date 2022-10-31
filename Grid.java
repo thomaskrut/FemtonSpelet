@@ -11,8 +11,8 @@ public class Grid implements ActionListener {
     JFrame frame = new JFrame();
     JPanel mainPanel = new JPanel(); //Ändrar namn till mainPanel för att lättare ha koll på vad koden referar till.
     JButton[][] buttonArray;
-    final int rows = 8;  //Horizontal
-    final int columns = 8;//Vertikal
+    final int rows = 4;  //Horizontal
+    final int columns = 4;//Vertikal
 
     // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
     List<Integer> listOfNumbers = generateListOfNumbers();
