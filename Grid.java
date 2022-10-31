@@ -82,6 +82,8 @@ public class Grid implements ActionListener {
         return buttonArray;
     }
 
+
+    //ritar upp alla knappar
     public void updateButtonsDisplay() {
 
         for (int i = 0; i < rows; i++) {
@@ -104,6 +106,7 @@ public class Grid implements ActionListener {
         int x = 0;
         int y = 0;
 
+        //hittar x och y för den siffra man klickat på
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                if (gameBoard[i][j] == number) {
@@ -113,6 +116,7 @@ public class Grid implements ActionListener {
             }
         }
 
+        // kollar knappen till vänster om den man klickat på
         if (x > 0) {
             if (gameBoard[x-1][y] == 0) {
                 gameBoard[x-1][y] = number;
@@ -121,6 +125,7 @@ public class Grid implements ActionListener {
             }
         }
 
+        //kollar knappen till höger om den man klickat på
         if (x < columns - 1) {
             if (gameBoard[x+1][y] == 0) {
                 gameBoard[x+1][y] = number;
@@ -129,6 +134,7 @@ public class Grid implements ActionListener {
             }
         }
 
+        //kollar knappen ovanför den man klickat på
         if (y > 0) {
             if (gameBoard[x][y-1] == 0) {
                 gameBoard[x][y-1] = number;
@@ -137,6 +143,7 @@ public class Grid implements ActionListener {
             }
         }
 
+        //kollar knappen nedanför den man klickat på
         if (y < rows - 1) {
             if (gameBoard[x][y+1] == 0) {
                 gameBoard[x][y+1] = number;
@@ -145,6 +152,8 @@ public class Grid implements ActionListener {
             }
         }
 
+        //returnerar false om man tryckte på en knapp som
+        //inte hade en tom knapp bredvid
         return false;
 
 
@@ -153,6 +162,7 @@ public class Grid implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         JButton buttonPressed = (JButton) e.getSource();
 
         System.out.println(buttonPressed.getText());
@@ -161,11 +171,6 @@ public class Grid implements ActionListener {
             updateButtonsDisplay();
         }
 
-
-
-
-        //används i testsyfte då jag inte kan skapa en testmap. Skriver ut button text.
-        //Kanske gå att använda mot int array "gameBoard" för att ha koll vart varje tile är lättare?
 
 
     }

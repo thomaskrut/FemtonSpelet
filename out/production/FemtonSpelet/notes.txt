@@ -1,7 +1,0 @@
-Idéer för vad som behövs:
-
-[ ] metod som kollar om man vunnit
-[ ] knappar för att avsluta och skapa nytt spel
-[ ] räknare som räknar antal förflyttningar
-[ ] större text på knapparna
-[ ] annan färg/ram på knapparna?
