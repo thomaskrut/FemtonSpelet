@@ -35,21 +35,36 @@ public class Grid implements ActionListener {
         frame.setLocationRelativeTo(null);
     }
 
-    // används inte i denna variant
-    /* public int[] generateOneDimensionalArray() {  //Skapar en array 0-15. Används för att skapa gameBoard och buttonArray.
-        int[] generatedArray = new int[16];
-        for (int i = 0; i < 16; i++) {
-            generatedArray[i] = i;
-        }
-        return generatedArray;
-    } */
-
     public List<Integer> generateListOfNumbers() {
         List<Integer> listOfNumbers = new ArrayList<>();
         for (int i = 0; i < columns * rows; i++) {
             listOfNumbers.add(i);
         }
         Collections.shuffle(listOfNumbers);
+        return listOfNumbers;
+    }
+
+    public List<Integer> generateFixedListOfNumbers() {
+        List<Integer> listOfNumbers = new ArrayList<>();
+        for (int i = 0; i < columns * rows; i++) {
+            listOfNumbers.add(i);
+        }
+        Collections.swap(listOfNumbers, 0,1);
+        Collections.swap(listOfNumbers, 5,1);
+
+        return listOfNumbers;
+    }
+
+    public List<Integer> generateFixedListOfNumbersForTesting() {
+        List<Integer> listOfNumbers = new ArrayList<>();
+        for (int i = 1; i < columns * rows; i++) {
+            listOfNumbers.add(i);
+        }
+
+        listOfNumbers.add(0);
+
+        Collections.swap(listOfNumbers, 14,15);
+
         return listOfNumbers;
     }
 
@@ -91,8 +106,7 @@ public class Grid implements ActionListener {
                 buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
                 if (gameBoard[i][j] == 0) {
                     buttonArray[i][j].setVisible(false);
-                }
-                else {
+                } else {
                     buttonArray[i][j].setVisible(true);
                 }
             }
@@ -107,17 +121,17 @@ public class Grid implements ActionListener {
         //hittar x och y för den siffra man klickat på
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-               if (gameBoard[i][j] == number) {
-                   x = i;
-                   y = j;
-               }
+                if (gameBoard[i][j] == number) {
+                    x = i;
+                    y = j;
+                }
             }
         }
 
         // kollar knappen till vänster om den man klickat på
         if (x > 0) {
-            if (gameBoard[x-1][y] == 0) {
-                gameBoard[x-1][y] = number;
+            if (gameBoard[x - 1][y] == 0) {
+                gameBoard[x - 1][y] = number;
                 gameBoard[x][y] = 0;
                 return true;
             }
@@ -125,8 +139,8 @@ public class Grid implements ActionListener {
 
         //kollar knappen till höger om den man klickat på
         if (x < columns - 1) {
-            if (gameBoard[x+1][y] == 0) {
-                gameBoard[x+1][y] = number;
+            if (gameBoard[x + 1][y] == 0) {
+                gameBoard[x + 1][y] = number;
                 gameBoard[x][y] = 0;
                 return true;
             }
@@ -134,8 +148,8 @@ public class Grid implements ActionListener {
 
         //kollar knappen ovanför den man klickat på
         if (y > 0) {
-            if (gameBoard[x][y-1] == 0) {
-                gameBoard[x][y-1] = number;
+            if (gameBoard[x][y - 1] == 0) {
+                gameBoard[x][y - 1] = number;
                 gameBoard[x][y] = 0;
                 return true;
             }
@@ -143,8 +157,8 @@ public class Grid implements ActionListener {
 
         //kollar knappen nedanför den man klickat på
         if (y < rows - 1) {
-            if (gameBoard[x][y+1] == 0) {
-                gameBoard[x][y+1] = number;
+            if (gameBoard[x][y + 1] == 0) {
+                gameBoard[x][y + 1] = number;
                 gameBoard[x][y] = 0;
                 return true;
             }
@@ -153,6 +167,26 @@ public class Grid implements ActionListener {
         //returnerar false om man tryckte på en knapp som
         //inte hade en tom knapp bredvid
         return false;
+    }
+
+    private void checkForWinningPosition() {
+
+        int counter = 1;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if(gameBoard[i][j] == counter) {
+                    counter++;
+                }
+            }
+        }
+
+        System.out.println(counter);
+
+        if (counter == rows * columns) {
+            JOptionPane.showMessageDialog(null, "VINST");
+        }
+
     }
 
 
@@ -165,7 +199,10 @@ public class Grid implements ActionListener {
 
         if (updateButtonArray(buttonPressed)) {
             updateButtonsDisplay();
+            checkForWinningPosition();
         }
 
     }
 }
+
+
