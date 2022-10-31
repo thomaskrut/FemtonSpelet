@@ -26,16 +26,14 @@ public class Grid implements ActionListener {
     public void showGrid() {
 
         mainPanel.setLayout(new GridLayout(rows, columns));
-        mainPanel.setBackground(Color.black);
+        //mainPanel.setBackground(Color.black);
         buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
         frame.add(mainPanel);
         frame.setVisible(true);
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-
     }
-
 
     // används inte i denna variant
     /* public int[] generateOneDimensionalArray() {  //Skapar en array 0-15. Används för att skapa gameBoard och buttonArray.
@@ -53,7 +51,6 @@ public class Grid implements ActionListener {
         }
         Collections.shuffle(listOfNumbers);
         return listOfNumbers;
-
     }
 
 
@@ -98,10 +95,8 @@ public class Grid implements ActionListener {
                 else {
                     buttonArray[i][j].setVisible(true);
                 }
-
             }
         }
-
     }
 
     public boolean updateButtonArray(JButton buttonPressed) {
@@ -158,8 +153,6 @@ public class Grid implements ActionListener {
         //returnerar false om man tryckte på en knapp som
         //inte hade en tom knapp bredvid
         return false;
-
-
     }
 
 
@@ -173,8 +166,6 @@ public class Grid implements ActionListener {
         if (updateButtonArray(buttonPressed)) {
             updateButtonsDisplay();
         }
-
-
 
     }
 }

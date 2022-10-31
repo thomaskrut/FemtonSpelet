@@ -6,6 +6,7 @@ class GridTest {
 
     @Test
     public void testSomething() {
+
         assertTrue(true);
 
     }
