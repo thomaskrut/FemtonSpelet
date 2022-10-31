@@ -1,41 +1,19 @@
-KLASS GRID
-Grid-objekt ska innehålla:
+Idéer för vad som behövs:
 
- - array av integers med siffrorna i varje ruta
- - jobba med tester för metoderna
-
-Metoder:
- - init(): sätter ut siffrorna slumpmässigt, tom ruta = 0;
-
-    - parametrar: -
-
-    - retur: -
-
- - flyttaBricka(): flyttar en bricka, dvs ändrar i arrayen
-
-    - parametrar: x och y på den bricka som ska flyttas
-    - eller parameter: en int, den siffra som ska flyttas, kanske enklare då knappen man trycker på har den siffran?
-
-    - retur: true or false om brickan kunde flyttas?
-
- - getGrid(): returnerar arrayen
+Krut
+[ ] metod som kollar om man vunnit
+    - något sätt att initiera spelet så att det snabbt kan vinnas, för att kunna testa och redovisa
+     - anropar funktion List<Integer> generateFixedListOfNumbers()
 
 
-    - retur: arrayen
+Sjöberg
+[ ] knappar för att avsluta och skapa nytt spel
+    - ny panel med knappar ovanför
+    - knapp "fuskknapp" som skapar upp ett lätt pussel, anropar funktion List<Integer> generateFixedListOfNumbers()
 
- - kollaVinst(): kollar om spelet har vunnits, alla brickor ligger rätt
+Sjöberg
+[ ] räknare som räknar antal förflyttningar
 
-    - parametrar: inga
+[ ] större text på knapparna
 
-    - return: true eller false
-
-
-USER INTERFACE
-JPanel med GridLayout 4x4, varje ruta innehåller en...... JButton?
-
-Metod som läser arrayen från grid-klassen och ändrar texten på varje knapp
-Metod som skickar ett värde till grid-klassen när man trycker på en knapp
- - skicka siffran som ska flyttas eller skicka koordinater?
-
-
- ASD
+[ ] annan färg/ram på knapparna?

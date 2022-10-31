@@ -1,67 +1,80 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 
-public class Grid extends JFrame implements ActionListener {
+public class Grid implements ActionListener {
     JFrame frame = new JFrame();
     JPanel mainPanel = new JPanel(); //Ändrar namn till mainPanel för att lättare ha koll på vad koden referar till.
     JButton[][] buttonArray;
     final int rows = 4;  //Horizontal
     final int columns = 4;//Vertikal
-    JLabel[][] labelArray;
 
-
-    int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
+    // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
+    List<Integer> listOfNumbers = generateListOfNumbers();
+    int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
 
     public Grid() {
-        int[][] gameBoard = generateBoardArray(oneDimensionalArray); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
+
         showGrid();
     }
 
-
     public void showGrid() {
 
-        mainPanel.setLayout(new GridLayout(4, 4));
-        buttonArray = generateButtonArray(oneDimensionalArray); //Skapar buttonarray och tilldelar textvärde 0-15.
+        mainPanel.setLayout(new GridLayout(rows, columns));
+        //mainPanel.setBackground(Color.black);
+        buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
         frame.add(mainPanel);
         frame.setVisible(true);
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-
     }
 
-
-    public int[] generateOneDimensionalArray() {  //Skapar en array 0-15. Används för att skapa gameBoard och buttonArray.
+    // används inte i denna variant
+    /* public int[] generateOneDimensionalArray() {  //Skapar en array 0-15. Används för att skapa gameBoard och buttonArray.
         int[] generatedArray = new int[16];
         for (int i = 0; i < 16; i++) {
             generatedArray[i] = i;
         }
         return generatedArray;
+    } */
+
+    public List<Integer> generateListOfNumbers() {
+        List<Integer> listOfNumbers = new ArrayList<>();
+        for (int i = 0; i < columns * rows; i++) {
+            listOfNumbers.add(i);
+        }
+        Collections.shuffle(listOfNumbers);
+        return listOfNumbers;
     }
 
-    public int[][] generateBoardArray(int[] oneDimensionalArray) {
+
+    public int[][] generateBoardArray(List<Integer> listOfNumbers) {
         int[][] gameBoardArray = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++)
-                gameBoardArray[i][j] = oneDimensionalArray[(i * columns) + j];
+                gameBoardArray[i][j] = listOfNumbers.get((i * columns) + j);
         }
         return gameBoardArray;
     }
 
-    public JButton[][] generateButtonArray(int[] oneDimensionalArray) {
+    public JButton[][] generateButtonArray() {
         JButton[][] buttonArray = new JButton[rows][columns];
-        JLabel[][] labelArray = generateJLabelArray(oneDimensionalArray);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                buttonArray[i][j] = new JButton((i + "," + j));
-                buttonArray[i][j].setName((i + "," + j));
-                buttonArray[i][j].setHideActionText(true);
-                buttonArray[i][j].add(labelArray[i][j]);
+                buttonArray[i][j] = new JButton();
                 buttonArray[i][j].addActionListener(this);              //Lägger till action listener på knappen när den skapas.
+                buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
+                buttonArray[i][j].setFocusable(false);
 
+                if (gameBoard[i][j] == 0) {
+                    buttonArray[i][j].setVisible(false);
+                }
                 mainPanel.add(buttonArray[i][j]);
             }
         }
@@ -69,38 +82,90 @@ public class Grid extends JFrame implements ActionListener {
         return buttonArray;
     }
 
-    public JLabel[][] generateJLabelArray(int[] oneDimensionalArray) {
-        JLabel[][] labelArray = new JLabel[rows][columns];
+
+    //ritar upp alla knappar
+    public void updateButtonsDisplay() {
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                labelArray[i][j] = new JLabel();
+                buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
+                if (gameBoard[i][j] == 0) {
+                    buttonArray[i][j].setVisible(false);
+                }
+                else {
+                    buttonArray[i][j].setVisible(true);
+                }
             }
         }
+    }
+
+    public boolean updateButtonArray(JButton buttonPressed) {
+        int number = Integer.parseInt(buttonPressed.getText());
+        int x = 0;
+        int y = 0;
+
+        //hittar x och y för den siffra man klickat på
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                labelArray[i][j].setText(String.valueOf(oneDimensionalArray[(i * columns) + j]));
+               if (gameBoard[i][j] == number) {
+                   x = i;
+                   y = j;
+               }
             }
         }
 
-        labelArray[0][0].setText(""); // 0 0 blir blank istället för 0.
-        return labelArray;
+        // kollar knappen till vänster om den man klickat på
+        if (x > 0) {
+            if (gameBoard[x-1][y] == 0) {
+                gameBoard[x-1][y] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        //kollar knappen till höger om den man klickat på
+        if (x < columns - 1) {
+            if (gameBoard[x+1][y] == 0) {
+                gameBoard[x+1][y] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        //kollar knappen ovanför den man klickat på
+        if (y > 0) {
+            if (gameBoard[x][y-1] == 0) {
+                gameBoard[x][y-1] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        //kollar knappen nedanför den man klickat på
+        if (y < rows - 1) {
+            if (gameBoard[x][y+1] == 0) {
+                gameBoard[x][y+1] = number;
+                gameBoard[x][y] = 0;
+                return true;
+            }
+        }
+
+        //returnerar false om man tryckte på en knapp som
+        //inte hade en tom knapp bredvid
+        return false;
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String s = e.getActionCommand();
-        if (s.isBlank()) {
-            s = "0";
+
+        JButton buttonPressed = (JButton) e.getSource();
+
+        System.out.println(buttonPressed.getText());
+
+        if (updateButtonArray(buttonPressed)) {
+            updateButtonsDisplay();
         }
-//        int selectedTile = Integer.parseInt(s);
-
-        System.out.println(s);
-//        System.out.println(selectedTile);
-
-        //används i testsyfte då jag inte kan skapa en testmap. Skriver ut button text.
-        //Kanske gå att använda mot int array "gameBoard" för att ha koll vart varje tile är lättare?
-
 
     }
 }
