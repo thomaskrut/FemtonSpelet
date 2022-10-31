@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,6 +73,8 @@ public class Grid implements ActionListener {
                 buttonArray[i][j] = new JButton();
                 buttonArray[i][j].addActionListener(this);              //Lägger till action listener på knappen när den skapas.
                 buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
+                buttonArray[i][j].setFocusable(false);
+
                 if (gameBoard[i][j] == 0) {
                     buttonArray[i][j].setVisible(false);
                 }
