@@ -13,6 +13,7 @@ public class Grid implements ActionListener {
     JButton[][] buttonArray;
     final int rows = 4;  //Horizontal
     final int columns = 4;//Vertikal
+    int turnCounter=0;
 
     // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
     List<Integer> listOfNumbers = generateListOfNumbers();
@@ -23,6 +24,10 @@ public class Grid implements ActionListener {
         showGrid();
     }
 
+
+    public int getTurnCounter(){
+        return  turnCounter;
+    }
     public void showGrid() {
 
         mainPanel.setLayout(new GridLayout(rows, columns));
@@ -165,6 +170,7 @@ public class Grid implements ActionListener {
 
         if (updateButtonArray(buttonPressed)) {
             updateButtonsDisplay();
+            turnCounter++;
         }
 
     }
