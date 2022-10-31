@@ -11,8 +11,8 @@ public class Grid implements ActionListener {
     JFrame frame = new JFrame();
     JPanel mainPanel = new JPanel(); //Ändrar namn till mainPanel för att lättare ha koll på vad koden referar till.
     JButton[][] buttonArray;
-    final int rows = 4;  //Horizontal
-    final int columns = 4;//Vertikal
+    final int rows = 8;  //Horizontal
+    final int columns = 8;//Vertikal
 
     // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
     List<Integer> listOfNumbers = generateListOfNumbers();
@@ -25,7 +25,7 @@ public class Grid implements ActionListener {
 
     public void showGrid() {
 
-        mainPanel.setLayout(new GridLayout(4, 4));
+        mainPanel.setLayout(new GridLayout(rows, columns));
         mainPanel.setBackground(Color.black);
         buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
         frame.add(mainPanel);
@@ -48,7 +48,7 @@ public class Grid implements ActionListener {
 
     public List<Integer> generateListOfNumbers() {
         List<Integer> listOfNumbers = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < columns * rows; i++) {
             listOfNumbers.add(i);
         }
         Collections.shuffle(listOfNumbers);
