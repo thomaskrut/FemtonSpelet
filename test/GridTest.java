@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class GridTest {
 
     @Test
-    public void testSomething() {
-
-        assertTrue(true);
-
+    void updateButtonArray() {
     }
 
+    @Test
+    void checkForWinningPosition() {
+    }
 }
