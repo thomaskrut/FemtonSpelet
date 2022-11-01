@@ -14,7 +14,7 @@ public class Grid implements ActionListener {
     final int columns = 4;//Vertikal
 
     // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
-    List<Integer> listOfNumbers = generateFixedListOfNumbersForTesting();
+    List<Integer> listOfNumbers = generateFixedListOfNumbers();
     int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
 
     public Grid(boolean testing) {
@@ -57,18 +57,7 @@ public class Grid implements ActionListener {
         return listOfNumbers;
     }
 
-    public List<Integer> generateFixedListOfNumbersForTesting() {
-        List<Integer> listOfNumbers = new ArrayList<>();
-        for (int i = 1; i < columns * rows; i++) {
-            listOfNumbers.add(i);
-        }
 
-        listOfNumbers.add(0);
-
-        Collections.swap(listOfNumbers, 14,15);
-
-        return listOfNumbers;
-    }
 
 
     public int[][] generateBoardArray(List<Integer> listOfNumbers) {
@@ -209,8 +198,6 @@ public class Grid implements ActionListener {
             if(checkForWinningPosition()) {
 
                 int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet! Antal förflyttningar: " + " . Vill du starta ett nytt spel?");
-
-                System.out.println(userChoice);
 
                 if (userChoice == 0) {
                     gameBoard = generateBoardArray(generateListOfNumbers()); //TODO Anropa metod istället som startar nytt spel?
