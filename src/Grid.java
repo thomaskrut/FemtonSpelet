@@ -10,8 +10,8 @@ public class Grid implements ActionListener {
     JFrame frame = new JFrame();
     JPanel mainPanel = new JPanel();
     JButton[][] buttonArray;
-    final int rows = 4; //Horizontal
-    final int columns = 4; //Vertikal
+    int rows = 4; //Horizontal
+    int columns = 4; //Vertikal
     List<Integer> listOfNumbers = generateListOfNumbers();
     int[][] gameBoard = generateBoardArray(listOfNumbers);
 
@@ -71,6 +71,8 @@ public class Grid implements ActionListener {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 buttonArray[i][j] = new JButton();
+                buttonArray[i][j].setFont(new Font("Arial", Font.PLAIN, 40));
+                //buttonArray[i][j].setBackground(new Color(200, 200, 200));
                 buttonArray[i][j].addActionListener(this);              //Lägger till action listener på knappen när den skapas.
                 buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
                 buttonArray[i][j].setFocusable(false);
@@ -196,6 +198,7 @@ public class Grid implements ActionListener {
 
                 if (userChoice == 0) {
                     gameBoard = generateBoardArray(generateListOfNumbers()); //TODO Anropa metod istället som startar nytt spel?
+                                                                             //eller kanske köra doClick() på starta-nytt-spel-knappen
                     updateButtonsDisplay();
                 }
             }

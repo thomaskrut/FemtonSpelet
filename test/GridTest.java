@@ -13,6 +13,8 @@ class GridTest {
     void testUpdateButtonArray() {
 
         Grid g = new Grid(true);
+        g.rows = 4;
+        g.columns = 4;
         List<Integer> testList = g.generateFixedListOfNumbers();
         g.gameBoard = g.generateBoardArray(testList);
         System.out.println(testList);
