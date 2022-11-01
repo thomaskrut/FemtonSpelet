@@ -26,11 +26,9 @@ public class Grid implements ActionListener {
         showGrid();
     }
 
-
     public int getTurnCounter() {
         return turnCounter;
     }
-
     public void showGrid() {
         frame.setLayout(new BorderLayout());
         gamePanel.setLayout(new GridLayout(rows, columns));
@@ -48,7 +46,6 @@ public class Grid implements ActionListener {
         frame.setLocationRelativeTo(null);
     }
 
-
     public List<Integer> generateListOfNumbers() {
         List<Integer> listOfNumbers = new ArrayList<>();
         for (int i = 0; i < columns * rows; i++) {
@@ -57,9 +54,6 @@ public class Grid implements ActionListener {
         Collections.shuffle(listOfNumbers);
         return listOfNumbers;
     }
-
-
-
     public int[][] generateBoardArray(List<Integer> listOfNumbers) {
         int[][] gameBoardArray = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
@@ -84,14 +78,12 @@ public class Grid implements ActionListener {
                 gamePanel.add(buttonArray[i][j]);
             }
         }
-
         return buttonArray;
     }
 
 
     //ritar upp alla knappar
     public void updateButtonsDisplay() {
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
@@ -172,7 +164,6 @@ public class Grid implements ActionListener {
                 updateButtonsDisplay();
 
             } else if (buttonPressed.equals(cheatButton)) {
-
 //                List<Integer> listOfNumbers = generateFixedListOfNumbers(); todo ta bort kommentar efter merge
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
