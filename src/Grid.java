@@ -8,12 +8,16 @@ import java.util.List;
 
 public class Grid implements ActionListener {
     JFrame frame = new JFrame();
-    JPanel mainPanel = new JPanel();
+    JPanel gamePanel = new JPanel(); //Ändrar namn till gridPanel för att lättare ha koll på vad koden referar till.
+    JPanel buttonPanel = new JPanel();
     JButton[][] buttonArray;
+    JButton newGame = new JButton("Nytt spel");
+    JButton cheatButton = new JButton("Fuskknappen");
+    int turnCounter = 0;
     int rows = 4; //Horizontal
     int columns = 4; //Vertikal
     List<Integer> listOfNumbers = generateListOfNumbers();
-    int[][] gameBoard = generateBoardArray(listOfNumbers);
+    int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'.
 
     public Grid(boolean testing) {
 
@@ -23,11 +27,21 @@ public class Grid implements ActionListener {
 
     }
 
-    public void showGrid() {
+    public int getTurnCounter() {
+        return turnCounter;
+    }
 
-        mainPanel.setLayout(new GridLayout(rows, columns));
+    public void showGrid() {
+        frame.setLayout(new BorderLayout());
+        gamePanel.setLayout(new GridLayout(rows, columns));
+        //gamePanel.setBackground(Color.black);
         buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
-        frame.add(mainPanel);
+        frame.add(gamePanel);
+        frame.add(buttonPanel, BorderLayout.NORTH);
+        buttonPanel.add(newGame);
+        buttonPanel.add(cheatButton);
+        newGame.addActionListener(this);
+        cheatButton.addActionListener(this);
         frame.setVisible(true);
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,13 +62,11 @@ public class Grid implements ActionListener {
         for (int i = 0; i < columns * rows; i++) {
             listOfNumbers.add(i);
         }
-        Collections.swap(listOfNumbers, 0,1);
-        Collections.swap(listOfNumbers, 5,1);
+        Collections.swap(listOfNumbers, 0, 1);
+        Collections.swap(listOfNumbers, 5, 1);
 
         return listOfNumbers;
     }
-
-
 
 
     public int[][] generateBoardArray(List<Integer> listOfNumbers) {
@@ -80,17 +92,15 @@ public class Grid implements ActionListener {
                 if (gameBoard[i][j] == 0) {
                     buttonArray[i][j].setVisible(false);
                 }
-                mainPanel.add(buttonArray[i][j]);
+                gamePanel.add(buttonArray[i][j]);
             }
         }
-
         return buttonArray;
     }
 
 
     //ritar upp alla knappar
     public void updateButtonsDisplay() {
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
@@ -165,7 +175,7 @@ public class Grid implements ActionListener {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if(gameBoard[i][j] == counter) {
+                if (gameBoard[i][j] == counter) {
                     counter++;
                 }
             }
@@ -173,8 +183,7 @@ public class Grid implements ActionListener {
 
         if (counter == rows * columns) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -185,25 +194,36 @@ public class Grid implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         JButton buttonPressed = (JButton) e.getSource();
+        if (buttonPressed.equals(newGame) || buttonPressed.equals(cheatButton)) {
+            if (buttonPressed.equals(newGame)) {
+                List<Integer> listOfNumbers = generateListOfNumbers();
+                gameBoard = generateBoardArray(listOfNumbers);
+                updateButtonsDisplay();
 
-        System.out.println(buttonPressed.getText());
-
-        if (updateButtonArray(buttonPressed)) {
-
-            updateButtonsDisplay();
-
-            if(checkForWinningPosition()) {
-
-                int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet! Antal förflyttningar: " + " . Vill du starta ett nytt spel?");
-
-                if (userChoice == 0) {
-                    gameBoard = generateBoardArray(generateListOfNumbers()); //TODO Anropa metod istället som startar nytt spel?
-                                                                             //eller kanske köra doClick() på starta-nytt-spel-knappen
-                    updateButtonsDisplay();
-                }
+            } else if (buttonPressed.equals(cheatButton)) {
+                List<Integer> listOfNumbers = generateFixedListOfNumbers();
+                gameBoard = generateBoardArray(listOfNumbers);
+                updateButtonsDisplay();
             }
-        }
 
+        } else {
+            if (updateButtonArray(buttonPressed)) {
+                updateButtonsDisplay();
+                turnCounter++;
+                if (checkForWinningPosition()) {
+
+                    int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet! Antal förflyttningar: " + getTurnCounter() + ". Vill du starta ett nytt spel?");
+
+                    if (userChoice == 0) {
+                        newGame.doClick();
+                    }
+                }
+                System.out.println(turnCounter);
+            }
+
+
+            System.out.println(buttonPressed.getText());
+        }
     }
 }
 
