@@ -29,7 +29,7 @@ class GridTest {
     }
 
     @Test
-    void checkForWinningPosition() {
+    void testCheckForWinningPosition() {
         Grid g = new Grid(true);
 
         List<Integer> listOfNumbers = new ArrayList<>();
@@ -38,13 +38,16 @@ class GridTest {
         }
 
         listOfNumbers.add(0);
-        Collections.swap(listOfNumbers, 14, 15);
-        g.gameBoard = g.generateBoardArray(listOfNumbers);
         System.out.println(listOfNumbers);
+        g.gameBoard = g.generateBoardArray(listOfNumbers);
+        assertTrue(g.checkForWinningPosition());
+        g.updateButtonArray(new JButton("15"));
+        System.out.println(listOfNumbers);
+        assertFalse(g.checkForWinningPosition());
         g.updateButtonArray(new JButton("11"));
         assertFalse(g.checkForWinningPosition());
         g.updateButtonArray(new JButton("11"));
-        assertTrue(g.checkForWinningPosition());
+
 
 
     }
