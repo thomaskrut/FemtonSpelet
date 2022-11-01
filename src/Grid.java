@@ -181,7 +181,7 @@ public class Grid implements ActionListener {
             }
         }
 
-        if (counter == rows * columns) {
+        if (counter == rows * columns && (gameBoard[0][0] == 0 || gameBoard[rows-1][columns-1] == 0)) {
             return true;
         } else {
             return false;
@@ -199,6 +199,7 @@ public class Grid implements ActionListener {
                 List<Integer> listOfNumbers = generateListOfNumbers();
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
+                turnCounter = 0;
 
             } else if (buttonPressed.equals(cheatButton)) {
                 List<Integer> listOfNumbers = generateFixedListOfNumbers();
@@ -212,7 +213,7 @@ public class Grid implements ActionListener {
                 turnCounter++;
                 if (checkForWinningPosition()) {
 
-                    int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet! Antal förflyttningar: " + getTurnCounter() + ". Vill du starta ett nytt spel?");
+                    int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\n\nVill du starta ett nytt spel?\n\n");
 
                     if (userChoice == 0) {
                         newGame.doClick();
