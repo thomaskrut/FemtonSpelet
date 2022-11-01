@@ -13,15 +13,10 @@ public class Grid implements ActionListener {
     JButton[][] buttonArray;
     JButton newGame = new JButton("Nytt spel");
     JButton cheatButton = new JButton("Fuskknappen");
-    final int rows = 4;  //Horizontal
-    final int columns = 4;//Vertikal
     int turnCounter = 0;
-
-    // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
     int rows = 4; //Horizontal
     int columns = 4; //Vertikal
     List<Integer> listOfNumbers = generateListOfNumbers();
-    int[][] gameBoard = generateBoardArray(listOfNumbers);
     int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'.
 
     public Grid(boolean testing) {
@@ -35,6 +30,7 @@ public class Grid implements ActionListener {
     public int getTurnCounter() {
         return turnCounter;
     }
+
     public void showGrid() {
         frame.setLayout(new BorderLayout());
         gamePanel.setLayout(new GridLayout(rows, columns));
@@ -66,13 +62,11 @@ public class Grid implements ActionListener {
         for (int i = 0; i < columns * rows; i++) {
             listOfNumbers.add(i);
         }
-        Collections.swap(listOfNumbers, 0,1);
-        Collections.swap(listOfNumbers, 5,1);
+        Collections.swap(listOfNumbers, 0, 1);
+        Collections.swap(listOfNumbers, 5, 1);
 
         return listOfNumbers;
     }
-
-
 
 
     public int[][] generateBoardArray(List<Integer> listOfNumbers) {
@@ -181,7 +175,7 @@ public class Grid implements ActionListener {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if(gameBoard[i][j] == counter) {
+                if (gameBoard[i][j] == counter) {
                     counter++;
                 }
             }
@@ -189,8 +183,7 @@ public class Grid implements ActionListener {
 
         if (counter == rows * columns) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
 
@@ -208,7 +201,7 @@ public class Grid implements ActionListener {
                 updateButtonsDisplay();
 
             } else if (buttonPressed.equals(cheatButton)) {
-//                List<Integer> listOfNumbers = generateFixedListOfNumbers(); todo ta bort kommentar efter merge
+                List<Integer> listOfNumbers = generateFixedListOfNumbers();
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
             }
@@ -217,25 +210,20 @@ public class Grid implements ActionListener {
             if (updateButtonArray(buttonPressed)) {
                 updateButtonsDisplay();
                 turnCounter++;
+                if (checkForWinningPosition()) {
+
+                    int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet! Antal förflyttningar: " + getTurnCounter() + ". Vill du starta ett nytt spel?");
+
+                    if (userChoice == 0) {
+                        newGame.doClick();
+                    }
+                }
                 System.out.println(turnCounter);
             }
-        if (updateButtonArray(buttonPressed)) {
 
-            updateButtonsDisplay();
 
-            if(checkForWinningPosition()) {
-
-                int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet! Antal förflyttningar: " + " . Vill du starta ett nytt spel?");
-
-                if (userChoice == 0) {
-                    gameBoard = generateBoardArray(generateListOfNumbers()); //TODO Anropa metod istället som startar nytt spel?
-                                                                             //eller kanske köra doClick() på starta-nytt-spel-knappen
-                    updateButtonsDisplay();
-                }
-            }
+            System.out.println(buttonPressed.getText());
         }
-
-        System.out.println(buttonPressed.getText());
     }
 }
 
