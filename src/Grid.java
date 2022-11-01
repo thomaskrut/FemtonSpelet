@@ -12,7 +12,7 @@ public class Grid implements ActionListener {
     JButton[][] buttonArray;
     final int rows = 4; //Horizontal
     final int columns = 4; //Vertikal
-    List<Integer> listOfNumbers = generateFixedListOfNumbers();
+    List<Integer> listOfNumbers = generateListOfNumbers();
     int[][] gameBoard = generateBoardArray(listOfNumbers);
 
     public Grid(boolean testing) {
