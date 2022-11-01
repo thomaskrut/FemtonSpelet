@@ -8,14 +8,12 @@ import java.util.List;
 
 public class Grid implements ActionListener {
     JFrame frame = new JFrame();
-    JPanel mainPanel = new JPanel(); //Ändrar namn till mainPanel för att lättare ha koll på vad koden referar till.
+    JPanel mainPanel = new JPanel();
     JButton[][] buttonArray;
-    final int rows = 4;  //Horizontal
-    final int columns = 4;//Vertikal
-
-    // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
+    final int rows = 4; //Horizontal
+    final int columns = 4; //Vertikal
     List<Integer> listOfNumbers = generateFixedListOfNumbers();
-    int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
+    int[][] gameBoard = generateBoardArray(listOfNumbers);
 
     public Grid(boolean testing) {
 
@@ -28,7 +26,6 @@ public class Grid implements ActionListener {
     public void showGrid() {
 
         mainPanel.setLayout(new GridLayout(rows, columns));
-        //mainPanel.setBackground(Color.black);
         buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
         frame.add(mainPanel);
         frame.setVisible(true);
@@ -171,8 +168,6 @@ public class Grid implements ActionListener {
                 }
             }
         }
-
-        System.out.println(counter);
 
         if (counter == rows * columns) {
             return true;

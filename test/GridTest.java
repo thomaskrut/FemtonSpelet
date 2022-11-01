@@ -44,7 +44,6 @@ class GridTest {
         g.updateButtonArray(new JButton("11"));
         assertTrue(g.checkForWinningPosition());
 
-        //assertTrue(g.checkForWinningPosition());
 
     }
 }
