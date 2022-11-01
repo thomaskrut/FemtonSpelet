@@ -1,0 +1,2 @@
+Conflict                     Branch              Solution
+Skillnad på XML-fil          Gridlayout            Välj en av filerna som skulle köras.
