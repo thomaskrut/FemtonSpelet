@@ -1,8 +1,20 @@
 Idéer för vad som behövs:
 
+Krut
 [ ] metod som kollar om man vunnit
     - något sätt att initiera spelet så att det snabbt kan vinnas, för att kunna testa och redovisa
-[ ] knappar för att avsluta och skapa nytt spel
-[ ] räknare som räknar antal förflyttningar
+     - anropar funktion List<Integer> generateFixedListOfNumbers()
+
+
+Sjöberg
+[ ] knappar för att avsluta och skapa nytt spel Done
+    - ny panel med knappar ovanför  Done
+    - knapp "fuskknapp" som skapar upp ett lätt pussel, anropar funktion List<Integer> generateFixedListOfNumbers()
+    Todo. Fixa actionlisteners.
+
+Sjöberg
+[ ] räknare som räknar antal förflyttningar Done.
+
 [ ] större text på knapparna
+
 [ ] annan färg/ram på knapparna?

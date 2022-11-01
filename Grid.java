@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,15 +8,18 @@ import java.util.List;
 
 public class Grid implements ActionListener {
     JFrame frame = new JFrame();
-    JPanel mainPanel = new JPanel(); //Ändrar namn till mainPanel för att lättare ha koll på vad koden referar till.
+    JPanel gamePanel = new JPanel(); //Ändrar namn till gridPanel för att lättare ha koll på vad koden referar till.
+    JPanel buttonPanel=new JPanel();
     JButton[][] buttonArray;
+    JButton newGame=new JButton("Nytt spel");
+    JButton cheatButton=new JButton("Fuskknappen");
     final int rows = 4;  //Horizontal
     final int columns = 4;//Vertikal
     int turnCounter=0;
 
     // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
     List<Integer> listOfNumbers = generateListOfNumbers();
-    int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
+    int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'.
 
     public Grid() {
 
@@ -28,26 +30,22 @@ public class Grid implements ActionListener {
     public int getTurnCounter(){
         return  turnCounter;
     }
-    public void showGrid() {
 
-        mainPanel.setLayout(new GridLayout(rows, columns));
-        //mainPanel.setBackground(Color.black);
+    public void showGrid() {
+        frame.setLayout(new BorderLayout());
+        gamePanel.setLayout(new GridLayout(rows, columns));
+        //gamePanel.setBackground(Color.black);
         buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
-        frame.add(mainPanel);
+        frame.add(gamePanel);
+        frame.add(buttonPanel, BorderLayout.NORTH);
+        buttonPanel.add(newGame);buttonPanel.add(cheatButton);
+        newGame.addActionListener(this);cheatButton.addActionListener(this);
         frame.setVisible(true);
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
     }
 
-    // används inte i denna variant
-    /* public int[] generateOneDimensionalArray() {  //Skapar en array 0-15. Används för att skapa gameBoard och buttonArray.
-        int[] generatedArray = new int[16];
-        for (int i = 0; i < 16; i++) {
-            generatedArray[i] = i;
-        }
-        return generatedArray;
-    } */
 
     public List<Integer> generateListOfNumbers() {
         List<Integer> listOfNumbers = new ArrayList<>();
@@ -80,7 +78,7 @@ public class Grid implements ActionListener {
                 if (gameBoard[i][j] == 0) {
                     buttonArray[i][j].setVisible(false);
                 }
-                mainPanel.add(buttonArray[i][j]);
+                gamePanel.add(buttonArray[i][j]);
             }
         }
 
@@ -165,6 +163,18 @@ public class Grid implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         JButton buttonPressed = (JButton) e.getSource();
+        if(buttonPressed.equals(newGame)||buttonPressed.equals(cheatButton)){
+            if (buttonPressed.equals(newGame)){
+                gameBoard = generateBoardArray(listOfNumbers);
+                updateButtonsDisplay();
+
+            }
+            else
+            if(buttonPressed.equals(cheatButton)){
+//            generateFixedListOfNumbers();
+            }
+        }
+
 
         System.out.println(buttonPressed.getText());
 
@@ -172,6 +182,8 @@ public class Grid implements ActionListener {
             updateButtonsDisplay();
             turnCounter++;
         }
+
+
 
     }
 }
