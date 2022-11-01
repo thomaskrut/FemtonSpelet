@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +14,7 @@ public class Grid implements ActionListener {
     final int columns = 4;//Vertikal
 
     // int[] oneDimensionalArray = generateOneDimensionalArray(); //Generar en 1d array med elementen 0-15.
-    List<Integer> listOfNumbers = generateListOfNumbers();
+    List<Integer> listOfNumbers = generateFixedListOfNumbersForTesting();
     int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
 
     public Grid() {
@@ -169,7 +168,7 @@ public class Grid implements ActionListener {
         return false;
     }
 
-    private void checkForWinningPosition() {
+    public boolean checkForWinningPosition() {
 
         int counter = 1;
 
@@ -184,7 +183,10 @@ public class Grid implements ActionListener {
         System.out.println(counter);
 
         if (counter == rows * columns) {
-            JOptionPane.showMessageDialog(null, "VINST");
+            return true;
+        }
+        else {
+            return false;
         }
 
     }
@@ -198,8 +200,20 @@ public class Grid implements ActionListener {
         System.out.println(buttonPressed.getText());
 
         if (updateButtonArray(buttonPressed)) {
+
             updateButtonsDisplay();
-            checkForWinningPosition();
+
+            if(checkForWinningPosition()) {
+
+                int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet! Antal förflyttningar: " + " . Vill du starta ett nytt spel?");
+
+                System.out.println(userChoice);
+
+                if (userChoice == 0) {
+                    gameBoard = generateBoardArray(generateListOfNumbers()); //TODO Anropa metod istället som startar nytt spel?
+                    updateButtonsDisplay();
+                }
+            }
         }
 
     }
