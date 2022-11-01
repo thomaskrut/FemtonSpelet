@@ -17,9 +17,12 @@ public class Grid implements ActionListener {
     List<Integer> listOfNumbers = generateFixedListOfNumbersForTesting();
     int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'. todo:Klarar vi oss med att bara Jbutton arrayen? Ska denna raderas?
 
-    public Grid() {
+    public Grid(boolean testing) {
 
-        showGrid();
+        if (!testing) {
+            showGrid();
+        }
+
     }
 
     public void showGrid() {
