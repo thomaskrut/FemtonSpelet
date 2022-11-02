@@ -14,10 +14,10 @@ public class Grid implements ActionListener {
     JButton newGame = new JButton("Nytt spel");
     JButton cheatButton = new JButton("Fuskknappen");
     int turnCounter = 0;
-    int rows = 4; //Horizontal
-    int columns = 4; //Vertikal
-    List<Integer> listOfNumbers = generateListOfNumbers();
-    int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'.
+    int rows = 4;
+    int columns = 4;
+    List<Integer> listOfNumbers;
+    int[][] gameBoard;
     Stopwatch timer=new Stopwatch();
 
 
