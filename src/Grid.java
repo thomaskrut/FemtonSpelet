@@ -198,10 +198,14 @@ public class Grid implements ActionListener {
         int columnToPutZero = rand.nextInt(columns);
         int indexOfZeroInList;
 
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i) > list.get(i + 1)) {
-                numberOfInversions++;
+        for (int i = 0; i < list.size(); i++) {
+
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(i) > list.get(j)) {
+                    numberOfInversions++;
+                }
             }
+
         }
 
         if (numberOfInversions % 2 == 0) { // jämnt antal inversions
