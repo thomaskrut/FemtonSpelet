@@ -25,7 +25,7 @@ public class Grid implements ActionListener {
     public Grid(boolean testing) {
 
         if (!testing) {
-            showGrid();
+            initGame();
         }
 
     }
@@ -34,17 +34,22 @@ public class Grid implements ActionListener {
         return turnCounter;
     }
 
-    public void showGrid() {
+    public void initGame() {
+
         frame.setTitle("Femtonspelet");
         frame.setLayout(new BorderLayout());
         gamePanel.setLayout(new GridLayout(rows, columns));
-        buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
         frame.add(gamePanel);
         frame.add(buttonPanel, BorderLayout.NORTH);
         buttonPanel.add(newGame);
         buttonPanel.add(cheatButton);
         newGame.addActionListener(this);
         cheatButton.addActionListener(this);
+
+        listOfNumbers = generateListOfNumbers(false);
+        gameBoard = generateBoardArray(listOfNumbers);
+        buttonArray = generateButtonArray(gameBoard);
+
         frame.setVisible(true);
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,25 +57,28 @@ public class Grid implements ActionListener {
         timer.start();
     }
 
-    public List<Integer> generateListOfNumbers() {
-        List<Integer> listOfNumbers = new ArrayList<>();
-        for (int i = 1; i < columns * rows; i++) {
-            listOfNumbers.add(i);
-        }
-        Collections.shuffle(listOfNumbers);
-        listOfNumbers = makeSolvable(listOfNumbers);
-        return listOfNumbers;
-    }
+    public List<Integer> generateListOfNumbers(boolean fixed) {
 
-    public List<Integer> generateFixedListOfNumbers() {
-        List<Integer> listOfNumbers = new ArrayList<>();
-        for (int i = 0; i < columns * rows; i++) {
-            listOfNumbers.add(i);
-        }
-        Collections.swap(listOfNumbers, 0, 1);
-        Collections.swap(listOfNumbers, 5, 1);
+        if (!fixed) {
+            List<Integer> listOfNumbers = new ArrayList<>();
+            for (int i = 1; i < columns * rows; i++) {
+                listOfNumbers.add(i);
+            }
+            Collections.shuffle(listOfNumbers);
+            listOfNumbers = makeSolvable(listOfNumbers);
+            return listOfNumbers;
 
-        return listOfNumbers;
+        } else {
+
+            List<Integer> listOfNumbers = new ArrayList<>();
+            for (int i = 0; i < columns * rows; i++) {
+                listOfNumbers.add(i);
+            }
+            Collections.swap(listOfNumbers, 0, 1);
+            Collections.swap(listOfNumbers, 5, 1);
+
+            return listOfNumbers;
+        }
     }
 
 
@@ -83,14 +91,13 @@ public class Grid implements ActionListener {
         return gameBoardArray;
     }
 
-    public JButton[][] generateButtonArray() {
+    public JButton[][] generateButtonArray(int[][] gameBoard) {
         JButton[][] buttonArray = new JButton[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 buttonArray[i][j] = new JButton();
                 buttonArray[i][j].setFont(new Font("Arial", Font.PLAIN, 40));
-                //buttonArray[i][j].setBackground(new Color(200, 200, 200));
-                buttonArray[i][j].addActionListener(this);              //Lägger till action listener på knappen när den skapas.
+                buttonArray[i][j].addActionListener(this);
                 buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
                 buttonArray[i][j].setFocusable(false);
 
@@ -226,9 +233,6 @@ public class Grid implements ActionListener {
         indexOfZeroInList = columnToPutZero + (rowToPutZero * rows);
         list.add(indexOfZeroInList, 0);
 
-        System.out.println(numberOfInversions);
-        System.out.println(rowToPutZero);
-
         return list;
     }
 
@@ -242,18 +246,17 @@ public class Grid implements ActionListener {
             timer.reset();
 
             if (buttonPressed.equals(newGame)) {
-                List<Integer> listOfNumbers = generateListOfNumbers();
+                List<Integer> listOfNumbers = generateListOfNumbers(false);
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
             } else if (buttonPressed.equals(cheatButton)) {
-                List<Integer> listOfNumbers = generateFixedListOfNumbers();
+                List<Integer> listOfNumbers = generateListOfNumbers(true);
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
             }
 
         } else {
             if (updateButtonArray(buttonPressed)) {
-                // System.out.println(buttonPressed.getText());
                 updateButtonsDisplay();
                 turnCounter++;
                 if (checkForWinningPosition()) {
@@ -270,7 +273,7 @@ public class Grid implements ActionListener {
                         System.exit(0);
                     }
                 }
-                // System.out.println(turnCounter);
+
             }
 
 
