@@ -13,6 +13,8 @@ public class Grid implements ActionListener {
     JButton[][] buttonArray;
     JButton newGame = new JButton("Nytt spel");
     JButton cheatButton = new JButton("Fuskknappen");
+
+
     int turnCounter = 0;
     int rows = 4; //Horizontal
     int columns = 4; //Vertikal
@@ -50,10 +52,11 @@ public class Grid implements ActionListener {
 
     public List<Integer> generateListOfNumbers() {
         List<Integer> listOfNumbers = new ArrayList<>();
-        for (int i = 0; i < columns * rows; i++) {
+        for (int i = 1; i < columns * rows; i++) {
             listOfNumbers.add(i);
         }
         Collections.shuffle(listOfNumbers);
+        listOfNumbers = makeSolvable(listOfNumbers);
         return listOfNumbers;
     }
 
@@ -189,6 +192,40 @@ public class Grid implements ActionListener {
 
     }
 
+    public List<Integer> makeSolvable(List<Integer> list) {
+
+        int numberOfInversions = 0;
+        Random rand = new Random();
+        int rowToPutZero = rand.nextInt(rows);
+        int columnToPutZero = rand.nextInt(columns);
+        int indexOfZeroInList;
+
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i) > list.get(i+1)) {
+                numberOfInversions++;
+            }
+        }
+
+        if (numberOfInversions % 2 == 0) { // jämnt antal inversions
+            while(rowToPutZero % 2 == 0) {
+                rowToPutZero = rand.nextInt(rows);
+            }
+        }
+        if (numberOfInversions % 2 != 0) { // udda antal inversions
+            while(rowToPutZero % 2 != 0) {
+                rowToPutZero = rand.nextInt(rows);
+            }
+        }
+
+        indexOfZeroInList = columnToPutZero + (rowToPutZero * rows);
+        list.add(indexOfZeroInList, 0);
+
+        System.out.println(numberOfInversions);
+        System.out.println(rowToPutZero);
+
+        return list;
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -209,6 +246,7 @@ public class Grid implements ActionListener {
 
         } else {
             if (updateButtonArray(buttonPressed)) {
+                // System.out.println(buttonPressed.getText());
                 updateButtonsDisplay();
                 turnCounter++;
                 if (checkForWinningPosition()) {
@@ -219,11 +257,11 @@ public class Grid implements ActionListener {
                         newGame.doClick();
                     }
                 }
-                System.out.println(turnCounter);
+                // System.out.println(turnCounter);
             }
 
 
-            System.out.println(buttonPressed.getText());
+
         }
     }
 }
