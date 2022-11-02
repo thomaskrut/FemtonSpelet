@@ -32,9 +32,9 @@ public class Grid implements ActionListener {
     }
 
     public void showGrid() {
+        frame.setTitle("Femtonspelet");
         frame.setLayout(new BorderLayout());
         gamePanel.setLayout(new GridLayout(rows, columns));
-        //gamePanel.setBackground(Color.black);
         buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
         frame.add(gamePanel);
         frame.add(buttonPanel, BorderLayout.NORTH);
@@ -249,10 +249,15 @@ public class Grid implements ActionListener {
                 turnCounter++;
                 if (checkForWinningPosition()) {
 
-                    int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\n\nVill du starta ett nytt spel?\n\n");
+                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\n\n";
+                    String[] choices = {"Nytt spel", "Avsluta"};
+
+                    int userChoice = JOptionPane.showOptionDialog(null, winMessage, "Grattis!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
 
                     if (userChoice == 0) {
                         newGame.doClick();
+                    } else {
+                        System.exit(0);
                     }
                 }
                 // System.out.println(turnCounter);
