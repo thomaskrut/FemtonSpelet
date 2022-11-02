@@ -13,8 +13,6 @@ public class Grid implements ActionListener {
     JButton[][] buttonArray;
     JButton newGame = new JButton("Nytt spel");
     JButton cheatButton = new JButton("Fuskknappen");
-
-
     int turnCounter = 0;
     int rows = 4; //Horizontal
     int columns = 4; //Vertikal
@@ -184,7 +182,7 @@ public class Grid implements ActionListener {
             }
         }
 
-        if (counter == rows * columns && (gameBoard[0][0] == 0 || gameBoard[rows-1][columns-1] == 0)) {
+        if (counter == rows * columns && (gameBoard[0][0] == 0 || gameBoard[rows - 1][columns - 1] == 0)) {
             return true;
         } else {
             return false;
@@ -201,18 +199,18 @@ public class Grid implements ActionListener {
         int indexOfZeroInList;
 
         for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i) > list.get(i+1)) {
+            if (list.get(i) > list.get(i + 1)) {
                 numberOfInversions++;
             }
         }
 
         if (numberOfInversions % 2 == 0) { // jämnt antal inversions
-            while(rowToPutZero % 2 == 0) {
+            while (rowToPutZero % 2 == 0) {
                 rowToPutZero = rand.nextInt(rows);
             }
         }
         if (numberOfInversions % 2 != 0) { // udda antal inversions
-            while(rowToPutZero % 2 != 0) {
+            while (rowToPutZero % 2 != 0) {
                 rowToPutZero = rand.nextInt(rows);
             }
         }
@@ -259,7 +257,6 @@ public class Grid implements ActionListener {
                 }
                 // System.out.println(turnCounter);
             }
-
 
 
         }
