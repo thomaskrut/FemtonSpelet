@@ -15,7 +15,7 @@ class GridTest {
         Grid g = new Grid(true);
         g.rows = 4;
         g.columns = 4;
-        List<Integer> testList = g.generateFixedListOfNumbers();
+        List<Integer> testList = g.generateListOfNumbers(true);
         g.gameBoard = g.generateBoardArray(testList);
         System.out.println(testList);
         assertEquals(testList.get(5), 0);
