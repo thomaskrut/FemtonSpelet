@@ -116,11 +116,7 @@ public class Grid implements ActionListener {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 buttonArray[i][j].setText(String.valueOf(gameBoard[i][j]));
-                if (gameBoard[i][j] == 0) {
-                    buttonArray[i][j].setVisible(false);
-                } else {
-                    buttonArray[i][j].setVisible(true);
-                }
+                buttonArray[i][j].setVisible(gameBoard[i][j] != 0);
             }
         }
     }
