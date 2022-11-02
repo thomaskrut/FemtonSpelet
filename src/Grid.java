@@ -32,9 +32,9 @@ public class Grid implements ActionListener {
     }
 
     public void showGrid() {
+        frame.setTitle("Femtonspelet");
         frame.setLayout(new BorderLayout());
         gamePanel.setLayout(new GridLayout(rows, columns));
-        //gamePanel.setBackground(Color.black);
         buttonArray = generateButtonArray(); //Skapar buttonarray och tilldelar textvärde 0-15.
         frame.add(gamePanel);
         frame.add(buttonPanel, BorderLayout.NORTH);
@@ -50,10 +50,11 @@ public class Grid implements ActionListener {
 
     public List<Integer> generateListOfNumbers() {
         List<Integer> listOfNumbers = new ArrayList<>();
-        for (int i = 0; i < columns * rows; i++) {
+        for (int i = 1; i < columns * rows; i++) {
             listOfNumbers.add(i);
         }
         Collections.shuffle(listOfNumbers);
+        listOfNumbers = makeSolvable(listOfNumbers);
         return listOfNumbers;
     }
 
@@ -181,12 +182,46 @@ public class Grid implements ActionListener {
             }
         }
 
-        if (counter == rows * columns && (gameBoard[0][0] == 0 || gameBoard[rows-1][columns-1] == 0)) {
+        if (counter == rows * columns && (gameBoard[0][0] == 0 || gameBoard[rows - 1][columns - 1] == 0)) {
             return true;
         } else {
             return false;
         }
 
+    }
+
+    public List<Integer> makeSolvable(List<Integer> list) {
+
+        int numberOfInversions = 0;
+        Random rand = new Random();
+        int rowToPutZero = rand.nextInt(rows);
+        int columnToPutZero = rand.nextInt(columns);
+        int indexOfZeroInList;
+
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i) > list.get(i + 1)) {
+                numberOfInversions++;
+            }
+        }
+
+        if (numberOfInversions % 2 == 0) { // jämnt antal inversions
+            while (rowToPutZero % 2 == 0) {
+                rowToPutZero = rand.nextInt(rows);
+            }
+        }
+        if (numberOfInversions % 2 != 0) { // udda antal inversions
+            while (rowToPutZero % 2 != 0) {
+                rowToPutZero = rand.nextInt(rows);
+            }
+        }
+
+        indexOfZeroInList = columnToPutZero + (rowToPutZero * rows);
+        list.add(indexOfZeroInList, 0);
+
+        System.out.println(numberOfInversions);
+        System.out.println(rowToPutZero);
+
+        return list;
     }
 
 
@@ -209,21 +244,26 @@ public class Grid implements ActionListener {
 
         } else {
             if (updateButtonArray(buttonPressed)) {
+                // System.out.println(buttonPressed.getText());
                 updateButtonsDisplay();
                 turnCounter++;
                 if (checkForWinningPosition()) {
 
-                    int userChoice = JOptionPane.showConfirmDialog(null, "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\n\nVill du starta ett nytt spel?\n\n");
+                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\n\n";
+                    String[] choices = {"Nytt spel", "Avsluta"};
+
+                    int userChoice = JOptionPane.showOptionDialog(null, winMessage, "Grattis!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
 
                     if (userChoice == 0) {
                         newGame.doClick();
+                    } else {
+                        System.exit(0);
                     }
                 }
-                System.out.println(turnCounter);
+                // System.out.println(turnCounter);
             }
 
 
-            System.out.println(buttonPressed.getText());
         }
     }
 }
