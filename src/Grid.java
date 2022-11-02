@@ -238,16 +238,14 @@ public class Grid implements ActionListener {
 
         JButton buttonPressed = (JButton) e.getSource();
         if (buttonPressed.equals(newGame) || buttonPressed.equals(cheatButton)) {
+            turnCounter = 0;
+            timer.reset();
+
             if (buttonPressed.equals(newGame)) {
                 List<Integer> listOfNumbers = generateListOfNumbers();
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
-                turnCounter = 0;
-                timer.reset();
-
-
             } else if (buttonPressed.equals(cheatButton)) {
-                timer.reset();
                 List<Integer> listOfNumbers = generateFixedListOfNumbers();
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
