@@ -18,6 +18,9 @@ public class Grid implements ActionListener {
     int columns = 4; //Vertikal
     List<Integer> listOfNumbers = generateListOfNumbers();
     int[][] gameBoard = generateBoardArray(listOfNumbers); //Skapar 'spelbrädan'.
+    Stopwatch timer=new Stopwatch();
+
+
 
     public Grid(boolean testing) {
 
@@ -46,6 +49,7 @@ public class Grid implements ActionListener {
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        timer.start();
     }
 
     public List<Integer> generateListOfNumbers() {
@@ -239,8 +243,11 @@ public class Grid implements ActionListener {
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
                 turnCounter = 0;
+                timer.reset();
+
 
             } else if (buttonPressed.equals(cheatButton)) {
+                timer.reset();
                 List<Integer> listOfNumbers = generateFixedListOfNumbers();
                 gameBoard = generateBoardArray(listOfNumbers);
                 updateButtonsDisplay();
@@ -252,14 +259,15 @@ public class Grid implements ActionListener {
                 updateButtonsDisplay();
                 turnCounter++;
                 if (checkForWinningPosition()) {
-
-                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\n\n";
+                    timer.stop();
+                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\nTid: "+ timer.getTimeString()+"\n\n";
                     String[] choices = {"Nytt spel", "Avsluta"};
 
                     int userChoice = JOptionPane.showOptionDialog(null, winMessage, "Grattis!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
 
                     if (userChoice == 0) {
                         newGame.doClick();
+
                     } else {
                         System.exit(0);
                     }
