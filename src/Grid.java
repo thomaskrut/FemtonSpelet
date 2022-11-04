@@ -284,7 +284,7 @@ public class Grid implements ActionListener {
 
                     timer.stop();
 
-                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\nTid: " + timer.getTimeString() + "\n\n";
+                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\nTid: " + timer.getStringTime() + "\n\n";
                     String[] choices = {"Nytt spel", "Avsluta"};
 
                     int userChoice = JOptionPane.showOptionDialog(null, winMessage, "Grattis!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
