@@ -19,8 +19,7 @@ public class Grid implements ActionListener {
     int columns = 4;
     List<Integer> listOfNumbers;
     int[][] gameBoard;
-    Stopwatch timer=new Stopwatch();
-
+    Stopwatch timer = new Stopwatch();
 
 
     public Grid(boolean testing) {
@@ -258,27 +257,34 @@ public class Grid implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         JButton buttonPressed = (JButton) e.getSource();
+
         if (buttonPressed.equals(newGame) || buttonPressed.equals(cheatButton)) {
-            turnCounter = 0;
-            timer.reset();
 
             if (buttonPressed.equals(newGame)) {
-                List<Integer> listOfNumbers = generateListOfNumbers(false);
-                gameBoard = generateBoardArray(listOfNumbers);
-                updateButtonsDisplay();
+
+                listOfNumbers = generateListOfNumbers(false);
+
             } else if (buttonPressed.equals(cheatButton)) {
-                List<Integer> listOfNumbers = generateListOfNumbers(true);
-                gameBoard = generateBoardArray(listOfNumbers);
-                updateButtonsDisplay();
+
+                listOfNumbers = generateListOfNumbers(true);
+
             }
 
+            turnCounter = 0;
+            timer.reset();
+            gameBoard = generateBoardArray(listOfNumbers);
+            updateButtonsDisplay();
+
         } else {
+
             if (updateButtonArray(buttonPressed)) {
                 updateButtonsDisplay();
                 turnCounter++;
                 if (checkForWinningPosition()) {
+
                     timer.stop();
-                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\nTid: "+ timer.getTimeString()+"\n\n";
+
+                    String winMessage = "Grattis, du löste pusslet!\n\nAntal förflyttningar: " + getTurnCounter() + "\nTid: " + timer.getTimeString() + "\n\n";
                     String[] choices = {"Nytt spel", "Avsluta"};
 
                     int userChoice = JOptionPane.showOptionDialog(null, winMessage, "Grattis!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
