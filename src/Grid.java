@@ -7,8 +7,9 @@ import java.util.List;
 
 
 public class Grid implements ActionListener {
+
     JFrame frame = new JFrame();
-    JPanel gamePanel = new JPanel(); //Ändrar namn till gridPanel för att lättare ha koll på vad koden referar till.
+    JPanel gamePanel = new JPanel();
     JPanel buttonPanel = new JPanel();
     JButton[][] buttonArray;
     JButton newGame = new JButton("Nytt spel");
@@ -81,7 +82,8 @@ public class Grid implements ActionListener {
         }
     }
 
-
+    // Returnerar en array av integer som motsvarar knapparnas
+    // värden.
     public int[][] generateBoardArray(List<Integer> listOfNumbers) {
         int[][] gameBoardArray = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
@@ -91,6 +93,9 @@ public class Grid implements ActionListener {
         return gameBoardArray;
     }
 
+    // Returnerar en array av JButtons vars utseende, text och
+    // actionListener sätts i en for-loop. Knapp med texten "0"
+    // blir osynlig.
     public JButton[][] generateButtonArray(int[][] gameBoard) {
         JButton[][] buttonArray = new JButton[rows][columns];
         for (int i = 0; i < rows; i++) {
@@ -111,7 +116,9 @@ public class Grid implements ActionListener {
     }
 
 
-    //ritar upp alla knappar
+    // Ritar upp alla knappar. Anropas då knappar bytt
+    // text efter att användaren klickat, samt vid
+    // ny spelomgång.
     public void updateButtonsDisplay() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -121,6 +128,10 @@ public class Grid implements ActionListener {
         }
     }
 
+    // Metoden tar emot en JButton, läser av texten på den, hittar den
+    // i grid-arrayen och kollar sedan om någon intilliggande knapp
+    // är "tom", i så fall byter knapparna text och metoden returnerar
+    // true, annars returnerar metoden false.
     public boolean updateButtonArray(JButton buttonPressed) {
         int number = Integer.parseInt(buttonPressed.getText());
         int x = 0;
@@ -177,6 +188,8 @@ public class Grid implements ActionListener {
         return false;
     }
 
+    // Metoden returnerar true om siffrorna ligger i nummerordning
+    // och om den tomma rutan är först eller sist.
     public boolean checkForWinningPosition() {
 
         int counter = 1;
@@ -197,6 +210,14 @@ public class Grid implements ActionListener {
 
     }
 
+    // Metoden tar emot en lista och räknar antalet "inversions", dvs
+    // par av siffror där en efterliggande siffran är högra än den
+    // som står först. Om antalet inversion är udda måste den tomma rutan
+    // ligga på en jämn rad nerifrån räknat; om antalet inversions är jämnt
+    // måste den tomma rutan ligga på en udda rad nerifrån räknat. Metoden
+    // stoppar in den tomma rutan (0:an) på rätt rad och returnerar listan.
+    // Koden är vår egen, men logiken har vi hittat på denna websida:
+    // https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
     public List<Integer> makeSolvable(List<Integer> list) {
 
         int numberOfInversions = 0;
